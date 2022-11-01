@@ -23,3 +23,26 @@ const birthyear=2002;
 //use let only if you are sure that you need to change the values in that variable
 
 //we can declare a variable without using let, const or var but its a terrible idea as it declares them globally
+const now=2040;
+const ageYash=now-2020;
+const ageMumma=now-2022;
+console.log(ageYash,ageMumma);
+console.log(ageYash*2,ageMumma/2,2**3);
+//2**3 equal is 2 to power 3
+
+const firstName="Yash";
+const lastName="Soni";
+console.log(firstName+" "+lastName);
+
+let x=10+5;
+x+=10;
+// x*=10;
+//x++;
+//x--;
+console.log(x);
+
+console.log(ageYash>ageMumma);
+console.log(ageMumma<20);
+
+const isFullAge=ageMumma<18;
+console.log(now-2000>now-2002)

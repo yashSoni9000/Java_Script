@@ -15,3 +15,19 @@ console.log(typeof population);
 console.log(typeof isIsland);
 console.log(typeof language);
 
+const halfPopulation=population/2;
+console.log(halfPopulation);
+
+population++;
+console.log(population);
+
+const finlandPopulation=6
+const isGreaterPopulation=population>finlandPopulation;
+console.log(isGreaterPopulation);
+
+const avgPopulation=33;
+console.log(population<avgPopulation);
+
+const description =country+" is in "+continent+", and its "+population+" population "+" people speak "+language;
+console.log(description);
+
