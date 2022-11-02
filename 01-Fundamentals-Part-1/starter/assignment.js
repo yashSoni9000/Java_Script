@@ -31,3 +31,19 @@ console.log(population<avgPopulation);
 const description =country+" is in "+continent+", and its "+population+" population "+" people speak "+language;
 console.log(description);
 
+
+// coding challenge #1
+
+const markMass=prompt("Enter Mark's weight(in kg) !!");
+const markHeight=prompt("Enter Mark's height(in meter) !!");
+
+const johnMass=prompt("Enter John's weight(in kg) !!");
+const johnHeight=prompt("Enter John's height(in meter) !!");
+
+const markBMI=markMass/(markHeight **2);
+const johnBMI=johnMass/(johnHeight **2);
+
+console.log(markBMI,johnBMI);
+const markHigherBMI=(markBMI>johnBMI);
+
+console.log(markHigherBMI);
