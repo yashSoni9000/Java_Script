@@ -1,10 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     background-color:rgb(230, 241, 241);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+    padding: 50px;
 }
 h1{
     font-size: 40px;
+    margin-bottom: 25px;
+}
+.form-id{
+    color: black;
+    text-align: center;
 }
 form{
     background-color: rgb(54, 187, 165);
@@ -18,5 +30,24 @@ form{
 /*hash is used for id names*/
 #your-name{
     background-color: yellow;
-    border: 5px solid rgb(132, 129, 129);
+    border: 5px solid rgb(0, 0, 0);
+    width: 400px;
+    padding: 25px;
+    margin-top: 25;
+}
+
+p{
+    margin-bottom: 20px;
+}
+
+input,button{
+    padding: 10px;
+    font-size: 16px;
+}
+a{
+    background-color: yellow;
+}
+
+#your-name h2{
+    color: olivedrab;
 }
