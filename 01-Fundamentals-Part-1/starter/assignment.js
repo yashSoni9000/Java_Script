@@ -28,22 +28,28 @@ console.log(isGreaterPopulation);
 const avgPopulation=33;
 console.log(population<avgPopulation);
 
-const description =country+" is in "+continent+", and its "+population+" population "+" people speak "+language;
+const description =country+" is in "+continent+", and its "+population+" population"+" people speak "+language;
 console.log(description);
 
+console.log(`${country} is in ${continent}, and its ${population} population people speak ${language}`)
 
-// coding challenge #1
+if(population>33) console.log(`${country}'s population is above average`)
+else console.log(`${country}'s population is ${33-population} million below average`)
 
-const markMass=prompt("Enter Mark's weight(in kg) !!");
-const markHeight=prompt("Enter Mark's height(in meter) !!");
 
-const johnMass=prompt("Enter John's weight(in kg) !!");
-const johnHeight=prompt("Enter John's height(in meter) !!");
 
-const markBMI=markMass/(markHeight **2);
-const johnBMI=johnMass/(johnHeight **2);
+// // coding challenge #1
 
-console.log(markBMI,johnBMI);
-const markHigherBMI=(markBMI>johnBMI);
+// const markMass=prompt("Enter Mark's weight(in kg) !!");
+// const markHeight=prompt("Enter Mark's height(in meter) !!");
 
-console.log(markHigherBMI);
+// const johnMass=prompt("Enter John's weight(in kg) !!");
+// const johnHeight=prompt("Enter John's height(in meter) !!");
+
+// const markBMI=markMass/(markHeight **2);
+// const johnBMI=johnMass/(johnHeight **2);
+
+// console.log(markBMI,johnBMI);
+// const markHigherBMI=(markBMI>johnBMI);
+
+// console.log(markHigherBMI);
