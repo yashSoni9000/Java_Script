@@ -71,4 +71,19 @@
 // if(age>=18) console.log("Yay!! start driving")
 // else console.log(`You need to wait ${18-age} years to get license`)
 
- 
+//type conversion
+ const inputYear='1991';
+ console.log(Number(inputYear),inputYear)
+ console.log(Number(inputYear)+10)
+
+ console.log(Number('yash'));
+ console.log(typeof NaN);
+
+ console.log(String(23),23);
+
+ // type coercion
+ console.log(`I am 20 years old`);
+ console.log('23'-'10'-3);
+ console.log('23'+'10'+'3');
+ console.log('23'*'10');
+

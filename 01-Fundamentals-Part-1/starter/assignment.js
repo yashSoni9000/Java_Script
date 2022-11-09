@@ -40,21 +40,21 @@
 
 // coding challenge #1
 
-const markMass=prompt("Enter Mark's weight(in kg) !!");
-const markHeight=prompt("Enter Mark's height(in meter) !!");
+// const markMass=prompt("Enter Mark's weight(in kg) !!");
+// const markHeight=prompt("Enter Mark's height(in meter) !!");
 
-const johnMass=prompt("Enter John's weight(in kg) !!");
-const johnHeight=prompt("Enter John's height(in meter) !!");
+// const johnMass=prompt("Enter John's weight(in kg) !!");
+// const johnHeight=prompt("Enter John's height(in meter) !!");
 
-const markBMI=markMass/(markHeight **2);
-const johnBMI=johnMass/(johnHeight **2);
+// const markBMI=markMass/(markHeight **2);
+// const johnBMI=johnMass/(johnHeight **2);
 
-console.log(markBMI,johnBMI);
-const markHigherBMI=(markBMI>johnBMI);
+// console.log(markBMI,johnBMI);
+// const markHigherBMI=(markBMI>johnBMI);
 
-console.log(markHigherBMI);
+// console.log(markHigherBMI);
 
-//coding challenge #2
+// //coding challenge #2
 
-if (markBMI>johnBMI) console.log(`Mark's BMI (${markBMI}) is higher than John's (${johnBMI})!`);
-else console.log(`John's BMI (${johnBMI}) is higher than Mark's (${markBMI})!`);
+// if (markBMI>johnBMI) console.log(`Mark's BMI (${markBMI}) is higher than John's (${johnBMI})!`);
+// else console.log(`John's BMI (${johnBMI}) is higher than Mark's (${markBMI})!`);
