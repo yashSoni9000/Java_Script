@@ -1,40 +1,53 @@
-const country ="India";
-const continent="Asia";
-let population =1417;
+const country = "India";
+const continent = "Asia";
+let population = 1417;
 
 // country="Findland"; this throws an error as const can not be changed later
 console.log(country);
 console.log(continent);
-console.log(population+" million");
+console.log(population + " million");
 
-const isIsland=false;
-const language="Hindi";
+const isIsland = false;
+const language = "Hindi";
 
 console.log(typeof country);
 console.log(typeof population);
 console.log(typeof isIsland);
 console.log(typeof language);
 
-const halfPopulation=population/2;
+const halfPopulation = population / 2;
 console.log(halfPopulation);
 
 population++;
 console.log(population);
 
-const finlandPopulation=6
-const isGreaterPopulation=population>finlandPopulation;
+const finlandPopulation = 6;
+const isGreaterPopulation = population > finlandPopulation;
 console.log(isGreaterPopulation);
 
-const avgPopulation=33;
-console.log(population<avgPopulation);
+const avgPopulation = 33;
+console.log(population < avgPopulation);
 
-const description =country+" is in "+continent+", and its "+population+" population"+" people speak "+language;
+const description =
+  country +
+  " is in " +
+  continent +
+  ", and its " +
+  population +
+  " population" +
+  " people speak " +
+  language;
 console.log(description);
 
-console.log(`${country} is in ${continent}, and its ${population} population people speak ${language}`)
+console.log(
+  `${country} is in ${continent}, and its ${population} population people speak ${language}`
+);
 
-if(population>33) console.log(`${country}'s population is above average`)
-else console.log(`${country}'s population is ${33-population} million below average`)
+if (population > 33) console.log(`${country}'s population is above average`);
+else
+  console.log(
+    `${country}'s population is ${33 - population} million below average`
+  );
 
 // console.log('9' - '5'); //4
 // console.log('19' - '13' + '17');//617
@@ -51,8 +64,6 @@ else console.log(`${country}'s population is ${33-population} million below aver
 
 // if(language==='English' && population<50 && isIsland) console.log(`You should live in ${country} :)`);
 // else console.log(`${country} does not meet your criteria :(` );
-
-
 
 // coding challenge #1
 
@@ -94,3 +105,5 @@ else console.log(`${country}'s population is ${33-population} million below aver
 
 //coding challenge #4
 
+const bill = 300;
+console.log(bill >= 20 && bill <= 300 ? 0.15 + bill : 0.2 + bill);
