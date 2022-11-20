@@ -43,3 +43,29 @@
 // console.log(
 //   `${yash.name} has ${yash.noOfFriends}, and his best friend is ${yash.bestFriend}`
 // );
+
+const Mark = {
+  fullName: "Mark Miller",
+  mass: 78,
+  height: 1.69,
+  calcBMI: function () {
+    return this.mass / this.height ** 2;
+  },
+};
+const John = {
+  fullName: "John Smith",
+  mass: 92,
+  height: 1.95,
+  calcBMI: function () {
+    return this.mass / this.height ** 2;
+  },
+};
+const bmi = Mark.calcBMI();
+const bmi1 = John.calcBMI();
+console.log(bmi);
+console.log(bmi1);
+console.log(
+  `${Mark.fullName}'s BMI (${bmi}) is ${
+    Mark.calcBMI > John.calcBMI ? "Less" : "Higher"
+  } than ${John.fullName}'s (${bmi1})`
+);
