@@ -70,3 +70,31 @@
 //     Mark.calcBMI > John.calcBMI ? "Less" : "Higher"
 //   } than ${John.fullName}'s (${bmi1})`
 // );
+
+// // coding challenge 4
+
+// const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+// const tips = [];
+// const totals = [];
+
+// const calcTip = (bill) => {
+//   return bill >= 50 && bill <= 300 ? 0.15 * bill : 0.2 * bill;
+// };
+
+// for (let i = 0; i < bills.length; i++) {
+//   tips.push(calcTip(bills[i]));
+//   totals.push(tips[i] + bills[i]);
+// }
+// console.log(tips, totals);
+// const calcAverage = (arr) => {
+//   let sum = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     sum += arr[i];
+//   }
+//   sum /= arr.length;
+//   return sum;
+// };
+// const total = calcAverage(tips);
+// // const total = calcAverage(totals);
+// // const total = calcAverage(bills);
+// console.log(total);
