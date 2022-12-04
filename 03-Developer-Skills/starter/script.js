@@ -2,9 +2,11 @@
 "use strict";
 
 const printForecast = (arr) => {
+  let str = "...";
   for (let i = 0; i < arr.length; i++) {
-    console.log(`${arr[i]} degree Celsius in day ${i + 1}`);
+    str += `${arr[i]} degree Celsius in day ${i + 1}...`;
   }
+  console.log(str);
 };
 
 const data1 = [17, 21, 23];
