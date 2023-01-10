@@ -30,6 +30,9 @@ const restaurant = {
   menulist: function (starterIndex, mainMenuIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainMenuIndex]]; // sending multiple return values
   },
+  orderMaggi: function (ing1, ing2, ing3) {
+    console.log(`Your maggi is ready with ${ing1},${ing2} and ${ing3}`);
+  },
 };
 
 const arr = [1, 2, 3];
@@ -72,3 +75,44 @@ const {
   categories: list,
 } = restaurant;
 console.log(restaurantName, timing, list);
+
+const bucket = [7, 8, 9];
+const tub = [1, 2, 3, 4, 5, 6, ...bucket]; //the ... operator pops the elements from previous array and put those elements in new array instead of putting whole array in another array
+console.log(tub);
+// we can use ... aka spread operator to destructure the array values
+console.log(...tub);
+
+// we can also add new elements to a array by creating new array without copying each element individually by using ...
+const newMenu = [...restaurant.mainMenu, 'Idli'];
+console.log(newMenu);
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(...menu);
+
+//making a maggi
+const maggiIndgredinets = ['water', 'spice', 'noodle'];
+console.log(...maggiIndgredinets);
+restaurant.orderMaggi(...maggiIndgredinets);
+
+const [pasta, ...otherDishes] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pasta);
+console.log(otherDishes);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  return sum;
+};
+
+const ans1 = add(2, 3);
+const ans2 = add(6, 9, 6, 9);
+const ans3 = add(1, 1, 2, 9, 2, 2);
+
+console.log(ans1);
+console.log(ans2);
+console.log(ans3);
