@@ -116,3 +116,98 @@ const ans3 = add(1, 1, 2, 9, 2, 2);
 console.log(ans1);
 console.log(ans2);
 console.log(ans3);
+
+restaurant.numGuests = 69;
+restaurant.numGuests = 0;
+
+console.log(restaurant.numGuests || 10);
+console.log(restaurant.numGuests ?? 10); //nullish coalescing operator only returns or evaluates next operator if its undefined or null else it allows on 0 and ''
+
+const rest1 = {
+  name: 'Hello Pizza',
+  noOfCustomer: 69,
+};
+const rest2 = {
+  name: 'my my momo',
+  owner: 'stfu',
+};
+
+// rest1.noOfCustomer=rest1.noOfCustomer||10;
+// rest2.noOfCustomer=rest2.noOfCustomer||10;
+
+// console.log(rest1.noOfCustomer);
+// console.log(rest2.noOfCustomer);
+
+//better way of doing above operation is
+// rest1.noOfCustomer ||= 10;
+// rest2.noOfCustomer ||= 10;
+
+// console.log(rest1.noOfCustomer);
+// console.log(rest2.noOfCustomer);
+
+// if we want to be more precise we can use the nullish operator to avoid bugs
+
+rest1.noOfCustomer ??= 10;
+rest2.noOfCustomer ??= 10;
+
+console.log(rest1.noOfCustomer);
+console.log(rest2.noOfCustomer);
+
+//coding challenge #1
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+const [player1, player2] = game.players;
+const [[gk, ...fieldPlayers]] = game.players;
+const [...allPlayers] = [game.players];
+const [...finalPlayer1] = ['Thiago', 'Coutinho', 'Perisic', ...game.players[0]];
+const { team1: team1, x: draw, team2: team2 } = game.odds;
+console.log(team1, draw, team2);
+// console.log(finalPlayer1);
+// console.log(allPlayers);
+// console.log(gk, fieldPlayers);
+// const [gk] = game.players[[0]];
+// const [fieldPlayers] = game.players[[]];
+// console.log(gk, fieldPlayers);
+
+// const [allPlayers] = [...game.players];
+// console.log(allPlayers);
