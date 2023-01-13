@@ -5,6 +5,24 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
+
+// const person = { firstName: 'Yash', lastName: 'Soni', age: 20 };
+// console.log(person);
+
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -12,20 +30,7 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  openingHours,
 
   menulist: function (starterIndex, mainMenuIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainMenuIndex]]; // sending multiple return values
@@ -34,6 +39,17 @@ const restaurant = {
     console.log(`Your maggi is ready with ${ing1},${ing2} and ${ing3}`);
   },
 };
+
+const myPC = [{ name: 'Yash', email: 'ys77357@gmail.com' }];
+// const myPC = [{ email: 'ys77357@gmail.com' }];
+
+// using the optional chaining
+console.log(myPC[0]?.name ?? 'No user Exists !!');
+
+//using for of loop to iterate through  nested objects
+for (const [day, { open, close }] of Object.entries(openingHours)) {
+  console.log(`The hotel opens on ${day} from ${open} to ${close} :)`);
+}
 
 const arr = [1, 2, 3];
 const [a, b, c] = arr;
@@ -64,7 +80,7 @@ const [p = 1, q = 1, r = 1] = [8, 9]; //default values destructuring initializat
 
 // object destructuring
 
-const { name, openingHours, categories } = restaurant;
+const { name, startingHours, categories } = restaurant;
 console.log(name, openingHours, categories);
 
 //to give custom name to the objects made
@@ -132,6 +148,11 @@ const rest2 = {
   owner: 'stfu',
 };
 
+const menuList = [...restaurant.starterMenu, ...restaurant.mainMenu];
+for (const iterator of menuList) {
+  console.log(iterator);
+}
+
 // rest1.noOfCustomer=rest1.noOfCustomer||10;
 // rest2.noOfCustomer=rest2.noOfCustomer||10;
 
@@ -197,13 +218,26 @@ const game = {
 };
 
 const [player1, player2] = game.players;
-const [[gk, ...fieldPlayers]] = game.players;
-const [...allPlayers] = [game.players];
-const [...finalPlayer1] = ['Thiago', 'Coutinho', 'Perisic', ...game.players[0]];
+const [gk, ...fieldPlayers] = player1;
+// const allPlayers = [...game.players[0], ...game.players[1]];
+const allPlayers = [...player1, ...player2];
+const finalPlayer1 = ['Thiago', 'Coutinho', 'Perisic', ...player1];
 const { team1: team1, x: draw, team2: team2 } = game.odds;
-console.log(team1, draw, team2);
-// console.log(finalPlayer1);
+const printGoals = function (...playerNames) {
+  console.log(`${playerNames.length} goals were scored !!`);
+  for (let i = 0; i < playerNames.length; i++) {
+    console.log(playerNames[i]);
+  }
+};
+team1 > team2 && console.log('Team 2 has more chances of winning');
+team1 < team2 && console.log('Team 1 has more chances of winning');
+// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+// printGoals(...player1, ...player2);
+// printGoals(...game.scored);
+
+// console.log(team1, draw, team2);
 // console.log(allPlayers);
+// console.log(finalPlayer1);
 // console.log(gk, fieldPlayers);
 // const [gk] = game.players[[0]];
 // const [fieldPlayers] = game.players[[]];
