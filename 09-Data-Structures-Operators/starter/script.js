@@ -174,8 +174,10 @@ rest2.noOfCustomer ??= 10;
 console.log(rest1.noOfCustomer);
 console.log(rest2.noOfCustomer);
 
+//---------------------------
 //coding challenge #1
 
+console.log('-----Coding Challenge #1-------');
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -245,3 +247,27 @@ team1 < team2 && console.log('Team 1 has more chances of winning');
 
 // const [allPlayers] = [...game.players];
 // console.log(allPlayers);
+
+//----------------------
+//coding challenge #2
+
+console.log('-----Coding Challenge #2-------');
+
+const scoring = game.scored.entries();
+for (const [i, item] of scoring) {
+  console.log(`Goal ${i + 1} :${item}`);
+}
+
+let average = 0;
+const oddss = Object.values(game.odds);
+for (const odd of oddss) {
+  average += odd;
+  average /= oddss.length;
+  console.log(average);
+}
+
+for (const [team, odd] of Object.entries(game.odds)) {
+  // console.log(team, odd);
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  console.log(`odd of ${teamStr} ${odd}`);
+}
