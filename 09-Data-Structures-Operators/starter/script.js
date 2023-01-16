@@ -271,3 +271,43 @@ for (const [team, odd] of Object.entries(game.odds)) {
   const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
   console.log(`odd of ${teamStr} ${odd}`);
 }
+
+// sets in js
+
+// we can not access elements elements like we can in array
+const orderSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Bread',
+  'Pasta',
+  'Pizza',
+]);
+console.log(...orderSet);
+
+// console.log(new Set('Yaash'));
+console.log(new Set('Yash')); // both print same output
+
+console.log(orderSet.size);
+console.log(orderSet.has('pizza')); //case sensetive parameters
+console.log(orderSet.has('Pizza')); //case sensetive parameters
+console.log(orderSet.has('corn'));
+console.log(orderSet.add('japaeno'));
+orderSet.delete('Pizza'); // if we cl this we will get a bool value, if it exists then return true and deletes else prints false
+console.log(orderSet);
+// orderSet.clear();
+// console.log(orderSet);
+
+for (const order of orderSet) {
+  console.log(order);
+}
+
+const staff = ['Waiter', 'Chef', 'Manager', 'Chef', 'Waiter'];
+const uniqueStaff = [...new Set(staff)];
+console.log(uniqueStaff);
+
+// OR we can do like this if we want to get unique value from array
+
+console.log(new Set(['Waiter', 'Chef', 'Manager', 'Chef', 'Waiter']).size);
+// same we can do with the strings as well
+console.log(new Set('yashsoni').size); // spaces are also include as unique values
