@@ -311,3 +311,26 @@ console.log(uniqueStaff);
 console.log(new Set(['Waiter', 'Chef', 'Manager', 'Chef', 'Waiter']).size);
 // same we can do with the strings as well
 console.log(new Set('yashsoni').size); // spaces are also include as unique values
+
+const rest = new Map();
+rest.set('name', 'Big Food');
+rest.set(1, 'Pututu');
+console.log(rest.set(2, 'Eater'));
+
+rest
+  .set('categories', ['Delhi', 'jaipur', 'ahemdabad'])
+  .set('open', 11)
+  .set('close', 22)
+  .set(true, 'We are open')
+  .set(false, 'We are closed');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+console.log(rest);
+
+const time = 21;
+rest.get(time > rest.get('open') && time < rest.get('open'));
+
+console.log(rest.has('categories'));
+restaurant.delete(2);
