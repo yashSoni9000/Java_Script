@@ -333,4 +333,37 @@ const time = 21;
 rest.get(time > rest.get('open') && time < rest.get('open'));
 
 console.log(rest.has('categories'));
-restaurant.delete(2);
+rest.delete(2);
+
+console.log(rest);
+rest.set([1, 2], 'Hello');
+console.log(rest);
+
+const question = new Map([
+  ['question', 'What is the best programming language'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'correct'],
+  [false, 'try again'],
+]);
+
+console.log(question); //show the whole map
+console.log(Object.entries(openingHours));
+const hourMap = new Map(Object.entries(openingHours));
+console.log(hourMap);
+
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answerr ${key}:${value}`);
+}
+// const answer = Number(prompt('Your answer'));
+// console.log(answer);
+
+// console.log(answer ? question.get(true) : question.get(false));
+//OR
+// console.log(question.get(question.get('correct') === answer));
+
+// to convert maps to array
+console.log([...question]);
