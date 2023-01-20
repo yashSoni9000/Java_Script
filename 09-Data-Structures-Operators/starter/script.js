@@ -401,3 +401,130 @@ for (const [key, value] of gameEvents) {
       : `[SECOND HALF] ${key}: ${value}`
   );
 }
+
+console.log('-----------------------------');
+console.log('Lecture Continue');
+/*what these string methods do is that javascript creates an object of the given string (process calles as boxing ) and then call it using
+methods as you can see on line 440 . After completing the task lets say we used a slice method that methode returns a string(check further lines after 440)
+*/
+const airline = 'Air India';
+const plane = 'A320';
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+
+console.log('B639'[0]);
+
+console.log(airline.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('India')); //  case sensetive
+
+// these methods returns a new string which we can store but it does not mutate the original string
+
+console.log(airline.slice(2)); // if only given a single parameter then it will print the rest of char ahead of it
+console.log(airline.slice(3, 7));
+
+console.log(airline.slice(0, airline.indexOf(' '))); // we used this so that we do not have to hard code the values
+console.log(airline.slice(airline.indexOf(' ') + 1));
+
+console.log(airline.slice(-5)); // extract letter from end side
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  if (seat.slice(-1) === 'B' || seat.slice(-1) === 'E')
+    console.log('Middle Seat !!!');
+  else console.log('Not middle seat!!');
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+console.log(new String('yash')); // stored in an object
+console.log(typeof new String('yash')); // see its an object
+console.log(typeof new String('yash').slice(1)); // see its an string
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+// can be calles directly like below
+console.log('yash'.toUpperCase());
+
+const passenger = 'yAsH';
+const passengerLower = passenger.toLowerCase();
+console.log(passengerLower[0].toUpperCase() + passengerLower.slice(1));
+// console.log(passengerLower);
+
+const email = 'myyash69@gmail.com';
+const loginEmail = '  MyYash69@Gmail.com  \n';
+// we need to first make the unusual string to lowercase and then trim the rest of unwanted space to get our result
+console.log(loginEmail.toLowerCase().trim());
+const princeINR = '1,11,727 R';
+
+// we can do chaining in this as well
+// and to replace all the occuraces we use regulare expression which is used in replacement of ',' with '.'
+const priceUS = princeINR.replace('R', '$').replace(/,/g, '.');
+console.log(priceUS);
+
+const plane1 = 'A23neo';
+console.log(plane1.includes('A23'));
+console.log(plane1.includes('Hell0'));
+
+console.log(plane.startsWith('A')); // case sensetive
+console.log(plane.startsWith('a'));
+
+console.log(...'a+very+nice+string'.split('+'));
+
+const [firstMane, lastMane] = 'Yash Soni'.split(' ');
+// const upperLastMane = lastMane.toUpperCase();
+console.log(firstMane, lastMane);
+
+// lets say if we need to write the last name in upper case and also add Mr. at starting position the we need to do all the work seprately
+// so to avoid this we can use join method to solve this problem
+console.log(['Mr.', firstMane, lastMane.toUpperCase()].join(' '));
+
+const capitalizeName = function (name2) {
+  const name3 = name2.split(' ');
+  let fullName = [];
+  // for (const nm of name3) {
+  //   fullName = [fullName, [nm[0].toUpperCase(), nm.slice(1)].join('')].join(' ');
+  // }
+  // console.log(fullName);
+
+  //OR
+
+  // for (const nm of name3) {
+  //   fullName.push(nm[0].toUpperCase() + nm.slice(1));
+  // }
+  // console.log(fullName.join(' '));
+
+  //OR
+
+  for (const nm of name3) {
+    fullName.push(nm.replace(nm[0], nm[0].toUpperCase()));
+  }
+  console.log(fullName.join(' '));
+};
+capitalizeName('kailash chandra soni');
+capitalizeName('hemu soni');
+
+const message = 'Go to game 69';
+console.log(message.padStart(25, '+')); //adds character to the beginning of the string
+
+const maskCreditCard = function (number) {
+  const str = number + '';
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(123456780576543));
+
+const message1 = 'Bad weather... Delayed';
+console.log(message1.repeat(5));
+
+const planesInLines = function (n) {
+  console.log(`Ther are ${n} planes in line ${'wait.. '.repeat(n)}`);
+};
+planesInLines(5);
