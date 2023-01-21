@@ -6,9 +6,77 @@ const flights =
 
 // Data needed for first part of the section
 
+// const flightarr = flights.split('+');
+
+// console.log(flightarr);
+// for (const [i, status] of flightarr.entries()) {
+//   const timing = status.split(';');
+//   // if (!(i % 2)) {
+//   //   console.log(
+//   //     `🛑 Delayed Departure from ${destination(
+//   //       timing[1],
+//   //       timing[2],
+//   //       timing[3]
+//   //     )}`
+//   //   );
+//   // } else {
+//   //   console.log(`Arrival from ${destination(timing[1], timing[2], timing[3])}`);
+//   // }
+
+//OR
+
+//   console.log(
+//     `🛑 Delayed Departure from ${destination(
+//       timing[1],
+//       timing[2],
+//       timing[3]
+//     ).padStart(35)}`
+//   );
+//   console.log(
+//     `Arrival from ${destination(timing[1], timing[2], timing[3]).padStart(35)}`
+//   );
+//   console.log(
+//     `🛑 Delayed Arrival from ${destination(
+//       timing[1],
+//       timing[2],
+//       timing[3]
+//     ).padStart(35)}`
+//   );
+//   console.log(
+//     `Departure from ${destination(timing[1], timing[2], timing[3]).padStart(
+//       35
+//     )}`
+//   );
+//   break;
+// }
+
+// OR
+
+// the following code has some unknown error which i am not able to solve
+
+function getCode(str) {
+  return str.slice(0, 3).toUpperCase();
+}
+
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(':');
+  const output = `${type.startsWith('_Delayed') ? '🛑' : ''}${type.replaceAll(
+    '_',
+    ' '
+  )} ${getCode(from)} ${getCode(to)} (${time.replace(':', 'h')})`.padStart(35);
+  console.log(output);
+}
+
+// function destination(from, to, time) {
+//   const hours = time.split(':');
+//   return `${from.slice(0, 3).toUpperCase()} to ${to
+//     .slice(0, 3)
+//     .toUpperCase()} (${hours[0]}h${hours[1]})`;
+// }
+
 // const person = { firstName: 'Yash', lastName: 'Soni', age: 20 };
 // console.log(person);
-
+/*
 const openingHours = {
   thu: {
     open: 12,
@@ -404,9 +472,9 @@ for (const [key, value] of gameEvents) {
 
 console.log('-----------------------------');
 console.log('Lecture Continue');
-/*what these string methods do is that javascript creates an object of the given string (process calles as boxing ) and then call it using
-methods as you can see on line 440 . After completing the task lets say we used a slice method that methode returns a string(check further lines after 440)
-*/
+// what these string methods do is that javascript creates an object of the given string (process calles as boxing ) and then call it using
+// methods as you can see on line 440 . After completing the task lets say we used a slice method that methode returns a string(check further lines after 440)
+
 const airline = 'Air India';
 const plane = 'A320';
 console.log(plane[0]);
@@ -528,3 +596,44 @@ const planesInLines = function (n) {
   console.log(`Ther are ${n} planes in line ${'wait.. '.repeat(n)}`);
 };
 planesInLines(5);
+
+// coding challenge #4
+
+console.log('-------Codinga Challenge #4--------');
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+// document.querySelector('button').addEventListener('click', function () {
+//   const underscoreText = document.querySelector('textarea').value;
+//   // console.log(underscoreText);
+//   const lowerCaseTrimmedWord = underscoreText.toLowerCase().trim();
+//   // console.log(lowerCaseTrimmedWord.indexOf('_'));
+//   const ans = lowerCaseTrimmedWord;
+//   // console.log(replace(ans[ans.indexOf('_') + 2], ans[ans.indexOf('_')].toUpperCase()));
+//   // console.log(ans.slice(ans.indexOf('_') + 2));
+//   const partialCamel = ans[ans.indexOf('_') + 1]
+//     .toUpperCase()
+//     .slice(ans.indexOf('_') + 2);
+//   console.log(partialCamel);
+//   // ans = lowerCaseTrimmedWord;
+//   // const ans = replace(
+//   //   lowerCaseTrimmedWord.indexOf('_') + 1,
+//   //   (lowerCaseTrimmedWord.indexOf('_') + 1).toUpperCase()
+//   // ).replace('_', '');
+//   // console.log(ans);
+// });
+
+document.querySelector('button').addEventListener('click', function () {
+  const underscoreText = document.querySelector('textarea').value;
+  const rows = underscoreText.split('\n');
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20, ' ')}${'✅'.repeat(i + 1)}`);
+  }
+});
+*/
