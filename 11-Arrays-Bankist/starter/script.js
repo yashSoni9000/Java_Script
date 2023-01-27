@@ -546,3 +546,48 @@ console.log(convertTitleCase(`and here is another title with an EXAMPLE`));
 
 //Coding Challenge #4
 console.log('----Coding Challenge #4----');
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+dogs.forEach(
+  dog => (dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28))
+);
+const saraDog = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(
+  `sara dog is eating too ${
+    saraDog.curFood > saraDog.recommendedFood ? 'much' : 'little'
+  }`
+);
+const ownerEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recommendedFood)
+  .flatMap(owner => owner.owners);
+const ownerEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(owner => owner.owners);
+// console.log(ownerEatTooMuch);
+// console.log(ownerEatTooLittle);
+console.log(`${ownerEatTooMuch.join(' and ')}'s eat too much`);
+console.log(`${ownerEatTooLittle.join(' and ')}'s eat too little`);
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+
+console.log(
+  dogs.some(
+    dog =>
+      dog.curFood > dog.recommendedFood * 0.9 &&
+      dog.curFood < dog.recommendedFood * 1.1
+  )
+);
+
+const okayDogs = dog =>
+  dog.curFood > dog.recommendedFood * 0.9 &&
+  dog.curFood < dog.recommendedFood * 1.1;
+
+// console.log(okayDogs);
+console.log(dogs.filter(okayDogs));
+
+const sortDogs = dogs.sort((a, b) => a.recommendedFood - b.recommendedFood);
+
+console.log(sortDogs);
