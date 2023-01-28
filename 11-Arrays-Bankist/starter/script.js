@@ -219,7 +219,7 @@ btnLoan.addEventListener('click', function (e) {
     currentAccount.movements.push(amount);
     updateUI(currentAccount);
   }
-  inputLoanAmount = '';
+  inputLoanAmount.value = '';
   inputLoanAmount.blur();
 });
 
