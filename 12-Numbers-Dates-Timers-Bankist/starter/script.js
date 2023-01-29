@@ -251,3 +251,39 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// set time out is a higher order function where we call another function and
+// after that function we can put the arguments that when to execute it
+// we can also pass string arguments which can be used by that callback function
+// we can also assign the settimeout a varaible so that we can use it later
+// or we can stop the waiting condtion sooner like in line 274 and 283
+
+const ingredients = ['noodle', 'masala Magic'];
+
+//following is the method to directly pass the arguments in callback function
+// setTimeout(
+//   (ing1, ing2) => {
+//     console.log(`Here is your maggie with ${ing1} and ${ing2}`);
+//   },
+//   3000,
+//   'noodle',
+//   'masala Magic'
+// );
+
+//following is the method to pass the arguments which are in array using spread operator
+const maggieTimer = setTimeout(
+  (ing1, ing2) => {
+    console.log(`Here is your maggie with ${ing1} and ${ing2}`);
+  },
+  3000,
+  ...ingredients
+);
+console.log('waiting for maggie....');
+
+//if the argumnet includes the given condtion then its not printed else it will
+if (ingredients.includes('noodle')) clearTimeout(maggieTimer);
+
+setInterval(function () {
+  const now = new Date();
+  console.log(now);
+}, 1000);
