@@ -172,7 +172,30 @@ const createUserNames = function (accounts) {
 createUserNames(accounts);
 // console.log(accounts);
 
-let currentAccount;
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // each call print remaining time
+    labelTimer.textContent = `${min}:${sec}`;
+    // when timer =0 logout and hide ui
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+    //decrease 1 sec
+    time--;
+  };
+  //set time to 5 min
+  let time = 100;
+  // call timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
+let currentAccount, timer;
 
 // currentAccount = account1;
 // updateUI(currentAccount);
@@ -215,6 +238,8 @@ btnLogin.addEventListener('click', function (e) {
     // calcDisplayBalance(currentAccount);
     //display summary
     // calcDisplaySummary(currentAccount);
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
     updateUI(currentAccount);
   }
   // const password = inputLoginPin.value;
@@ -256,6 +281,9 @@ btnTransfer.addEventListener('click', function (e) {
   } else alert('Transaction cancelled either due to insufficient balance  or invalid username!!');
   inputTransferTo.value = inputTransferAmount.value = '';
   inputLoginPin.blur();
+  //reset timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 // console.log(userName);
 // console.log(account1.movements);
@@ -267,16 +295,21 @@ btnLoan.addEventListener('click', function (e) {
     amount > 0 &&
     currentAccount.movements.some(move => move >= amount * 0.1)
   ) {
-    //add the movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      //add the movement
+      currentAccount.movements.push(amount);
 
-    //add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      //add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    updateUI(currentAccount);
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
+  //reset timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
