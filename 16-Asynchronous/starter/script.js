@@ -3,6 +3,31 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+//Error rendering function
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+  //commented this as we have used it in finally method as it happend independent of the state of promise
+};
+
+//Rendering countries
+const renderCountry = function (data, className = '') {
+  const html = `<article class="country ${className}">
+  <img class="country__img" src="${data.flag}" />
+  <div class="country__data">
+  <h3 class="country__name">${data.name}</h3>
+  <h4 class="country__region">${data.region}</h4>
+  <p class="country__row"><span>👫</span>${(+data.population / 1000000).toFixed(
+    1
+  )} people</p>
+    <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+    <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+    </div>
+    </article>`;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  // countriesContainer.style.opacity = 1;
+  //commented this as we have used it in finally method as it happend independent of the state of promise
+};
 ///////////////////////////////////////
 /*
 const getCountryData = function (country) {
@@ -40,7 +65,7 @@ getCountryData('india');
 getCountryData('usa');
 
 
-// when a callback calls another callback and that callback also calls anothe one then that
+// when a callback calls another callback and that callback also calls another one then that
 // is called a callback hell aka nested callbacks
 // to identify a callback hell we starts to see more indentation like a pyramind (e.g. line 100)
 
@@ -110,22 +135,9 @@ setTimeout(() => {
   }, 1000);
 }, 1000);
 */
-const renderCountry = function (data, className = '') {
-  const html = `<article class="country ${className}">
-    <img class="country__img" src="${data.flag}" />
-    <div class="country__data">
-      <h3 class="country__name">${data.name}</h3>
-      <h4 class="country__region">${data.region}</h4>
-      <p class="country__row"><span>👫</span>${(
-        +data.population / 1000000
-      ).toFixed(1)} people</p>
-      <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-      <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
-    </div>
-  </article>`;
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
+
+//rendering countries function at the top
+
 //old method of doing requests
 // const request = new XMLHttpRequest();
 //   request.open('GET', `https://restcountries.com/v2/name/${country}`);
@@ -133,6 +145,9 @@ const renderCountry = function (data, className = '') {
 //new method of doing requests
 //this return a promise
 //promise is a container of future events
+// a promise has 2 states accepted and rejected
+// in accepted state the .then method is called and in rejection the .catch method is called
+// .finally method is called independent of the states i.e. it will get executed no matter what
 
 // const request3 = fetch(`https://restcountries.com/v2/name/india`);
 // console.log(request3);
@@ -149,12 +164,20 @@ const renderCountry = function (data, className = '') {
 //     });
 // };
 
+// At the top there is a function for rendering the error along with render countries
+
 //nice code getting first promise and then that promise is returned again
 // for our data
 const getCountryData = function (country) {
   //country 1
   fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => response.json())
+    .then(
+      response => response.json()
+      //this is the not optimised way of handeling the chained promised we have
+      // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
+      //all kinds of errors (line 179)
+      // err => alert(err)
+    )
     .then(data => {
       renderCountry(data[0]);
 
@@ -166,8 +189,26 @@ const getCountryData = function (country) {
       // return 23;
     })
     // .then(data => alert(data));
-    .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(
+      response => response.json()
+      // err => alert(err)
+    )
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      /*instead of showing annoying alert we are console.log the error*/ console.error(
+        `${err} 💥💥💥`
+      );
+      renderError(`Something went wrong 💥💥 ${err.message}. Try again!!`);
+    })
+    //the finally method always executes independent of the error or fetching from api
+    // finally method only works as the catch method also return a promise
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
-getCountryData('usa');
+btn.addEventListener('click', () => getCountryData('usa'));
+// getCountryData('usa');
 // getCountryData('spain');
+
+// lets say if we search some random countries as follows then it show the error again
+// getCountryData('dffhrif')
