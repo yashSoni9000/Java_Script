@@ -168,31 +168,93 @@ setTimeout(() => {
 
 //nice code getting first promise and then that promise is returned again
 // for our data
+
+// we are making a helper function which fetches the promise and check for error and return the json promise
+// we are using this as we used these features multiple times in the following code
+const getJSON = function (url, errorMsg = 'Something Went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      //throw terminates like return function
+      // and if this condition is thrown then the promise is rejected state and goes to catch method
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+    //this is the not optimised way of handeling the chained promised we have
+    // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
+    //all kinds of errors (line 259)
+    // err => alert(err)
+  });
+};
+
+//below code is before using the getJSON funtion
+
+// const getCountryData = function (country) {
+//   //country 1
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => {
+//       if (!response.ok) {
+//         //throw terminates like return function
+//         // and if this condition is thrown then the promise is rejected state and goes to catch method
+//         throw new Error(`Country Not Found (${response.status})`);
+//       }
+//       return response.json();
+//       //this is the not optimised way of handeling the chained promised we have
+//       // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
+//       //all kinds of errors (line 211)
+//       // err => alert(err)
+//     })
+//     .then(data => {
+//       renderCountry(data[0]);
+
+//       //condtition for neighbour
+//       const neighbour = data[0].borders[0];
+//       //if no neighbouring country found
+//       if (!neighbour) return;
+//       //country 2
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+//       // return 23;
+//     })
+//     // .then(data => alert(data));
+//     .then(
+//       response => {
+//         if (!response.ok)
+//           throw new Error(`Country Not Found (${response.status})`);
+//         return response.json();
+//       }
+//       // err => alert(err)
+//     )
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(err => {
+//       /*instead of showing annoying alert we are console.log the error*/ console.error(
+//         `${err} 💥💥💥`
+//       );
+//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!!`);
+//     })
+//     //the finally method always executes independent of the error or fetching from api
+//     // finally method only works as the catch method also return a promise
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
 const getCountryData = function (country) {
   //country 1
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(
-      response => response.json()
-      //this is the not optimised way of handeling the chained promised we have
-      // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
-      //all kinds of errors (line 179)
-      // err => alert(err)
-    )
+  getJSON(`https://restcountries.com/v2/name/${country}`, `Country Not Found`)
     .then(data => {
       renderCountry(data[0]);
 
       //condtition for neighbour
       const neighbour = data[0].borders[0];
-      if (!neighbour) return;
+      //if no neighbouring country found return
+      if (!neighbour) throw new Error(`No Neighbour Found!!`);
+      //instead of simply returning we can throw an error which tell that there is no neighbour found
       //country 2
-      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour}`,
+        `Country Not Found`
+      );
       // return 23;
     })
     // .then(data => alert(data));
-    .then(
-      response => response.json()
-      // err => alert(err)
-    )
     .then(data => renderCountry(data, 'neighbour'))
     .catch(err => {
       /*instead of showing annoying alert we are console.log the error*/ console.error(
@@ -211,4 +273,7 @@ btn.addEventListener('click', () => getCountryData('usa'));
 // getCountryData('spain');
 
 // lets say if we search some random countries as follows then it show the error again
-// getCountryData('dffhrif')
+getCountryData('dffhrif');
+// even when there is no country like the above the promise is not rejected ,instead its fullfilled and we get some error
+//message of 404 which is not the required message so we use the throw method with the custom error in line 179
+// we need to handel errors using catch method so that its convenient for us to find the cause of error
