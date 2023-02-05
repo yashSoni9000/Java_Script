@@ -173,6 +173,7 @@ setTimeout(() => {
 // we are using this as we used these features multiple times in the following code
 const getJSON = function (url, errorMsg = 'Something Went wrong') {
   return fetch(url).then(response => {
+    // console.log(response);
     if (!response.ok) {
       //throw terminates like return function
       // and if this condition is thrown then the promise is rejected state and goes to catch method
@@ -186,7 +187,7 @@ const getJSON = function (url, errorMsg = 'Something Went wrong') {
   });
 };
 
-//below code is before using the getJSON funtion
+//below code is before using the getJSON function
 
 // const getCountryData = function (country) {
 //   //country 1
@@ -200,7 +201,7 @@ const getJSON = function (url, errorMsg = 'Something Went wrong') {
 //       return response.json();
 //       //this is the not optimised way of handeling the chained promised we have
 //       // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
-//       //all kinds of errors (line 211)
+//       //all kinds of errors
 //       // err => alert(err)
 //     })
 //     .then(data => {
@@ -240,6 +241,7 @@ const getCountryData = function (country) {
   //country 1
   getJSON(`https://restcountries.com/v2/name/${country}`, `Country Not Found`)
     .then(data => {
+      // console.log(data);
       renderCountry(data[0]);
 
       //condtition for neighbour
@@ -268,12 +270,46 @@ const getCountryData = function (country) {
       countriesContainer.style.opacity = 1;
     });
 };
-btn.addEventListener('click', () => getCountryData('usa'));
+// btn.addEventListener('click', () => getCountryData('usa'));
 // getCountryData('usa');
 // getCountryData('spain');
 
 // lets say if we search some random countries as follows then it show the error again
-getCountryData('dffhrif');
+
+// getCountryData('dffhrif');
+
 // even when there is no country like the above the promise is not rejected ,instead its fullfilled and we get some error
 //message of 404 which is not the required message so we use the throw method with the custom error in line 179
 // we need to handel errors using catch method so that its convenient for us to find the cause of error
+
+//Coding Challenge #1
+console.log(`----Coding Challenge #1----`);
+
+const whereAmI = function (lat, lan) {
+  fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`)
+    .then(response => {
+      console.log(response);
+      if (!response.ok) throw new Error(`Frequent Requests ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city},${data.country}`);
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+      // getCountryData(`${data.country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country Not Found (${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
+    //to use the above data we need to set the opacity in both the function back to 1 manually in line 9 and 28
+    .catch(err => {
+      console.error(`${err}`);
+      // renderError(`Something Went Wrong!! ${err}.`);
+    });
+};
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474);
