@@ -310,6 +310,22 @@ const whereAmI = function (lat, lan) {
       // renderError(`Something Went Wrong!! ${err}.`);
     });
 };
-whereAmI(52.508, 13.381);
-whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474);
+// whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.873);
+// whereAmI(-33.933, 18.474);
+
+//continue lectures
+
+//here the order is that test start and test end will first execute and then promise will execute and then timeout will
+// be executed . This is due to the promise which has priority over the call back queue ,that priority queue is known
+// as mirco-task queue , this queue  is executed before callbacks can be executed so the promise is executed first and then
+// the timeout function's callback was executed
+console.log(`Test Start`); //1
+setTimeout(() => console.log(`0 sec timer`), 0); //4
+Promise.resolve('Resolver Promise 1').then(res => console.log(res)); //3
+Promise.resolve('Resolver Promise 2').then(res => {
+  // for (let i = 0; i < 10000000000; i++) {}
+  console.log(res);
+});
+
+console.log(`Test End`); //2
