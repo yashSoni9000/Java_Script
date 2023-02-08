@@ -284,7 +284,7 @@ const getCountryData = function (country) {
 
 //Coding Challenge #1
 console.log(`----Coding Challenge #1----`);
-
+/*
 const whereAmI = function (lat, lan) {
   fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`)
     .then(response => {
@@ -310,6 +310,7 @@ const whereAmI = function (lat, lan) {
       // renderError(`Something Went Wrong!! ${err}.`);
     });
 };
+*/
 // whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
@@ -339,7 +340,7 @@ const lotteryPromise = new Promise((resolve, reject) => {
   }, 2000);
 });
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 // a real example of promisifying settimeout function
 const wait = function (seconds) {
@@ -356,25 +357,78 @@ const wait = function (seconds) {
 //   .then(() => console.log(`I waited for 1 second`));
 
 // we can now rewrite the callback hell settimeout function from line 125
-wait(2)
-  .then(() => {
-    console.log(`1 second passed`);
-    return wait(1);
-  })
-  .then(() => {
-    console.log(`2 second passed`);
-    return wait(1);
-  })
-  .then(() => {
-    console.log(`3 second passed`);
-    return wait(1);
-  })
-  .then(() => {
-    console.log(`4 second passed`);
-    return wait(1);
-  })
-  .then(() => console.log(`5 second passed`));
+// wait(2)
+//   .then(() => {
+//     console.log(`1 second passed`);
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log(`2 second passed`);
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log(`3 second passed`);
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log(`4 second passed`);
+//     return wait(1);
+//   })
+//   .then(() => console.log(`5 second passed`));
 
 //the below promise is resolved immediately
-Promise.resolve(`You Winnny!!`).then(res => console.log(res));
-Promise.reject(new Error(`You lost!!`)).catch(res => console.error(res));
+// Promise.resolve(`You Winnny!!`).then(res => console.log(res));
+// Promise.reject(new Error(`You lost!!`)).catch(res => console.error(res));
+
+//geolocation callback
+// navigator.geolocation.getCurrentPosition(
+//     position => console.log(position),
+//     err => console.log(err)
+//   );
+
+//geolocation promsie
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    //OR
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+//rendering the country based on current coordinates
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lan } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
+    })
+    .then(response => {
+      console.log(response);
+      if (!response.ok) throw new Error(`Frequent Requests ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city},${data.country}`);
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+      // getCountryData(`${data.country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country Not Found (${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
+    //to use the above data we need to set the opacity in both the function back to 1 manually in line 9 and 28
+    .catch(err => {
+      console.error(`${err}`);
+      // renderError(`Something Went Wrong!! ${err}.`);
+    });
+};
+
+btn.addEventListener('click', whereAmI);
