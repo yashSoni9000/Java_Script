@@ -320,12 +320,61 @@ const whereAmI = function (lat, lan) {
 // be executed . This is due to the promise which has priority over the call back queue ,that priority queue is known
 // as mirco-task queue , this queue  is executed before callbacks can be executed so the promise is executed first and then
 // the timeout function's callback was executed
-console.log(`Test Start`); //1
-setTimeout(() => console.log(`0 sec timer`), 0); //4
-Promise.resolve('Resolver Promise 1').then(res => console.log(res)); //3
-Promise.resolve('Resolver Promise 2').then(res => {
-  // for (let i = 0; i < 10000000000; i++) {}
-  console.log(res);
+
+// console.log(`Test Start`); //1
+// setTimeout(() => console.log(`0 sec timer`), 0); //4
+// Promise.resolve('Resolver Promise 1').then(res => console.log(res)); //3
+// Promise.resolve('Resolver Promise 2').then(res => {
+//   // for (let i = 0; i < 10000000000; i++) {}
+//   console.log(res);
+// });
+
+// console.log(`Test End`); //2
+
+const lotteryPromise = new Promise((resolve, reject) => {
+  console.log(`Lottery Draw is going on!!`);
+  setTimeout(() => {
+    if (Math.random() >= 0.5) resolve(`You WIN!!`);
+    else reject(new Error(`You Lost :(`));
+  }, 2000);
 });
 
-console.log(`Test End`); //2
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// a real example of promisifying settimeout function
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    // console.log(`Hello`);
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+// wait(2)
+//   .then(() => {
+//     console.log(`I waited for 2 second`);
+//     return wait(1);
+//   })
+//   .then(() => console.log(`I waited for 1 second`));
+
+// we can now rewrite the callback hell settimeout function from line 125
+wait(2)
+  .then(() => {
+    console.log(`1 second passed`);
+    return wait(1);
+  })
+  .then(() => {
+    console.log(`2 second passed`);
+    return wait(1);
+  })
+  .then(() => {
+    console.log(`3 second passed`);
+    return wait(1);
+  })
+  .then(() => {
+    console.log(`4 second passed`);
+    return wait(1);
+  })
+  .then(() => console.log(`5 second passed`));
+
+//the below promise is resolved immediately
+Promise.resolve(`You Winnny!!`).then(res => console.log(res));
+Promise.reject(new Error(`You lost!!`)).catch(res => console.error(res));
