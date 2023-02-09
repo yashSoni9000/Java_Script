@@ -332,13 +332,13 @@ const whereAmI = function (lat, lan) {
 
 // console.log(`Test End`); //2
 
-const lotteryPromise = new Promise((resolve, reject) => {
-  console.log(`Lottery Draw is going on!!`);
-  setTimeout(() => {
-    if (Math.random() >= 0.5) resolve(`You WIN!!`);
-    else reject(new Error(`You Lost :(`));
-  }, 2000);
-});
+// const lotteryPromise = new Promise((resolve, reject) => {
+//   console.log(`Lottery Draw is going on!!`);
+//   setTimeout(() => {
+//     if (Math.random() >= 0.5) resolve(`You WIN!!`);
+//     else reject(new Error(`You Lost :(`));
+//   }, 2000);
+// });
 
 // lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
@@ -431,4 +431,43 @@ const whereAmI = function () {
     });
 };
 
-btn.addEventListener('click', whereAmI);
+// btn.addEventListener('click', whereAmI);
+
+//coding challenge #2
+
+const imgContainer = document.querySelector('.images');
+console.log(`----Coding Challenge #2`);
+const createImage = function (imgPath) {
+  return new Promise((resolve, reject) => {
+    const image = document.createElement('img');
+    image.src = `${imgPath}`;
+    image.addEventListener('load', function () {
+      imgContainer.append(image);
+      resolve(image);
+    });
+    image.addEventListener('error', function () {
+      reject(new Error('Image Not Found!!'));
+    });
+  });
+};
+
+let currentImage;
+createImage(`img/img-1.jpg`)
+  .then(img => {
+    currentImage = img;
+    console.log(`Image 1 loaded`);
+    return wait(2);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+    return createImage(`img/img-2.jpg`);
+  })
+  .then(img => {
+    currentImage = img;
+    console.log(`Image 1 loaded`);
+    return wait(2);
+  })
+  .then(() => {
+    currentImage.style.display = 'none';
+  })
+  .catch(err => console.error(err));
