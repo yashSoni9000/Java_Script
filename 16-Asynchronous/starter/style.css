@@ -107,7 +107,9 @@ body {
   background-color: orangered;
   cursor: pointer;
 }
-
+.hidden {
+  display: none;
+}
 .images {
   display: flex;
 }
