@@ -401,35 +401,35 @@ const getPosition = function () {
 // getPosition().then(pos => console.log(pos));
 
 //rendering the country based on current coordinates
-const whereAmI = function () {
-  getPosition()
-    .then(pos => {
-      const { latitude: lat, longitude: lan } = pos.coords;
-      return fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
-    })
-    .then(response => {
-      console.log(response);
-      if (!response.ok) throw new Error(`Frequent Requests ${response.status}`);
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log(`You are in ${data.city},${data.country}`);
-      return fetch(`https://restcountries.com/v2/name/${data.country}`);
-      // getCountryData(`${data.country}`);
-    })
-    .then(response => {
-      if (!response.ok)
-        throw new Error(`Country Not Found (${response.status})`);
-      return response.json();
-    })
-    .then(data => renderCountry(data[0]))
-    //to use the above data we need to set the opacity in both the function back to 1 manually in line 9 and 28
-    .catch(err => {
-      console.error(`${err}`);
-      // renderError(`Something Went Wrong!! ${err}.`);
-    });
-};
+// const whereAmI = function () {
+//   getPosition()
+//     .then(pos => {
+//       const { latitude: lat, longitude: lan } = pos.coords;
+//       return fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
+//     })
+//     .then(response => {
+//       console.log(response);
+//       if (!response.ok) throw new Error(`Frequent Requests ${response.status}`);
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city},${data.country}`);
+//       return fetch(`https://restcountries.com/v2/name/${data.country}`);
+//       // getCountryData(`${data.country}`);
+//     })
+//     .then(response => {
+//       if (!response.ok)
+//         throw new Error(`Country Not Found (${response.status})`);
+//       return response.json();
+//     })
+//     .then(data => renderCountry(data[0]))
+//     //to use the above data we need to set the opacity in both the function back to 1 manually in line 9 and 28
+//     .catch(err => {
+//       console.error(`${err}`);
+//       // renderError(`Something Went Wrong!! ${err}.`);
+//     });
+// };
 
 // btn.addEventListener('click', whereAmI);
 
@@ -451,23 +451,33 @@ const createImage = function (imgPath) {
   });
 };
 
-let currentImage;
-createImage(`img/img-1.jpg`)
-  .then(img => {
-    currentImage = img;
-    console.log(`Image 1 loaded`);
-    return wait(2);
-  })
-  .then(() => {
-    currentImage.style.display = 'none';
-    return createImage(`img/img-2.jpg`);
-  })
-  .then(img => {
-    currentImage = img;
-    console.log(`Image 1 loaded`);
-    return wait(2);
-  })
-  .then(() => {
-    currentImage.style.display = 'none';
-  })
-  .catch(err => console.error(err));
+// let currentImage;
+// createImage(`img/img-1.jpg`)
+//   .then(img => {
+//     currentImage = img;
+//     console.log(`Image 1 loaded`);
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//     return createImage(`img/img-2.jpg`);
+//   })
+//   .then(img => {
+//     currentImage = img;
+//     console.log(`Image 1 loaded`);
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//   })
+//   .catch(err => console.error(err));
+
+const whereAmI = async function (country) {
+  const response = await fetch(`https://restcountries.com/v2/name/${country}`);
+  const data = await response.json();
+  console.log(data);
+  renderCountry(data[0]);
+  // console.log(response);
+};
+console.log(`First`);
+whereAmI('USA');
