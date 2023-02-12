@@ -472,12 +472,20 @@ const createImage = function (imgPath) {
 //   })
 //   .catch(err => console.error(err));
 
-const whereAmI = async function (country) {
-  const response = await fetch(`https://restcountries.com/v2/name/${country}`);
+const whereAmI = async function () {
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lan } = pos.coords;
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+  const response = await fetch(
+    `https://restcountries.com/v2/name/${dataGeo.country}`
+  );
   const data = await response.json();
   console.log(data);
   renderCountry(data[0]);
   // console.log(response);
 };
 console.log(`First`);
-whereAmI('USA');
+// whereAmI('USA');
+whereAmI();
