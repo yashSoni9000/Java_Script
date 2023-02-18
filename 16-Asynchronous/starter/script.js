@@ -25,7 +25,7 @@ const renderCountry = function (data, className = '') {
     </div>
     </article>`;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
   //commented this as we have used it in finally method as it happend independent of the state of promise
 };
 ///////////////////////////////////////
@@ -388,15 +388,15 @@ const wait = function (seconds) {
 
 //geolocation promsie
 
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    // navigator.geolocation.getCurrentPosition(
-    //   position => resolve(position),
-    //   err => reject(err)
-    //OR
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   position => resolve(position),
+//     //   err => reject(err)
+//     //OR
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 
 // getPosition().then(pos => console.log(pos));
 
@@ -472,31 +472,31 @@ const createImage = function (imgPath) {
 //   })
 //   .catch(err => console.error(err));
 
-try {
-  const whereAmI = async function () {
-    const pos = await getPosition();
-    const { latitude: lat, longitude: lan } = pos.coords;
-    const resGeo = await fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
-    if (!resGeo.ok) throw new Error(`Problem getting loaction data`);
-    const dataGeo = await resGeo.json();
-    console.log(dataGeo);
-    const response = await fetch(
-      `https://restcountries.com/v2/name/${dataGeo.country}`
-    );
-    if (!resGeo.ok) throw new Error(`Problem getting country`);
-    const data = await response.json();
-    console.log(data);
-    renderCountry(data[0]);
-    // console.log(response);
-  };
-  // whereAmI('USA');
-  whereAmI();
-  console.log(`First`);
-} catch (error) {
-  console.error(err);
-  renderError(`Something Went Wrong ${error.message}`);
-}
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
 
+const whereAmI = async function () {
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lan } = pos.coords;
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+  const country = dataGeo.country;
+  console.log(country);
+  // fetch(`https://restcountries.com/v2/name/${country}`).then(res=>console.log(res));
+
+  // The above code is same as below code, the difference is that the below code is a lot cleaner and looks synchronous
+  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+  // console.log(res);
+  const data = await res.json();
+  console.log(data);
+  renderCountry(data[1]);
+};
+whereAmI();
+console.log(`FIRST`);
 // try {
 //   let y = 1;
 //   const x = 2;
