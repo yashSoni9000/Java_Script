@@ -25,15 +25,31 @@ const renderCountry = function (data, className = '') {
     </div>
     </article>`;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
   //commented this as we have used it in finally method as it happend independent of the state of promise
 };
+const getJSON = function (url, errorMsg = 'Something Went wrong') {
+  return fetch(url).then(response => {
+    // console.log(response);
+    if (!response.ok) {
+      //throw terminates like return function
+      // and if this condition is thrown then the promise is rejected state and goes to catch method
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+    //this is the not optimised way of handeling the chained promised we have
+    // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
+    //all kinds of errors (line 259)
+    // err => alert(err)
+  });
+};
+
 ///////////////////////////////////////
 /*
-const getCountryData = function (country) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v2/name/${country}`);
-  let i = 0;
+  const getCountryData = function (country) {
+    const request = new XMLHttpRequest();
+    request.open('GET', `https://restcountries.com/v2/name/${country}`);
+    let i = 0;
   if (country === 'india') i = 1;
   request.send();
   //   console.log(this.responseText);
@@ -171,21 +187,6 @@ setTimeout(() => {
 
 // we are making a helper function which fetches the promise and check for error and return the json promise
 // we are using this as we used these features multiple times in the following code
-const getJSON = function (url, errorMsg = 'Something Went wrong') {
-  return fetch(url).then(response => {
-    // console.log(response);
-    if (!response.ok) {
-      //throw terminates like return function
-      // and if this condition is thrown then the promise is rejected state and goes to catch method
-      throw new Error(`${errorMsg} (${response.status})`);
-    }
-    return response.json();
-    //this is the not optimised way of handeling the chained promised we have
-    // to set the below function every where when we do the response.json() so we use catch at the end of all the promised to catch
-    //all kinds of errors (line 259)
-    // err => alert(err)
-  });
-};
 
 //below code is before using the getJSON function
 
@@ -479,28 +480,72 @@ const getPosition = function () {
 };
 
 const whereAmI = async function () {
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lan } = pos.coords;
-  const resGeo = await fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
-  const country = dataGeo.country;
-  console.log(country);
-  // fetch(`https://restcountries.com/v2/name/${country}`).then(res=>console.log(res));
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lan } = pos.coords;
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lan}?geoit=json`);
+    if (!resGeo.ok) throw new Error(`Problem getting location data`);
+    const dataGeo = await resGeo.json();
+    // console.log(dataGeo);
+    const country = dataGeo.country;
+    // console.log(country);
+    // fetch(`https://restcountries.com/v2/name/${country}`).then(res=>console.log(res));
 
-  // The above code is same as below code, the difference is that the below code is a lot cleaner and looks synchronous
-  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
-  // console.log(res);
-  const data = await res.json();
-  console.log(data);
-  renderCountry(data[1]);
+    // The above code is same as below code, the difference is that the below code is a lot cleaner and looks synchronous
+    const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+    // console.log(res);
+
+    if (!res.ok) throw new Error(`Problem getting country data`);
+    const data = await res.json();
+    // console.log(data);
+    renderCountry(data[1]);
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
+  } catch (err) {
+    console.log(err);
+    renderError(`!! ${err.message}`);
+    // to use this remove the comments from renderError function of opacity
+
+    //Reject promise returned from async function
+    throw err;
+  }
 };
-whereAmI();
-console.log(`FIRST`);
+
+console.log(`1: Will get loaction`);
+// const city = whereAmI();
+// console.log(city);
+
+//In the below code we handeled the try catch and the async await function  in
+//a then and catch method so to remove we made similar code but with async and await
+
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(() => console.log(`3: Finished get loaction`));
+
+//async await function
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`2: ${err.message}`);
+  }
+  console.log(`3: Finished get location`);
+})();
+
+// console.log(`FIRST`);
 // try {
 //   let y = 1;
 //   const x = 2;
-//   x = 3;
+//   x = 3;// assignment to const variable
 // } catch (error) {
 //   console.error(error.message);
 // }
+
+const get3countries = async function (c1, c2, c3) {
+  try {
+    const data1 = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+  } catch (error) {
+    console.error(err);
+  }
+};
