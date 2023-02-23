@@ -510,7 +510,7 @@ const whereAmI = async function () {
   }
 };
 
-console.log(`1: Will get loaction`);
+// console.log(`1: Will get loaction`);
 // const city = whereAmI();
 // console.log(city);
 
@@ -523,15 +523,15 @@ console.log(`1: Will get loaction`);
 //   .finally(() => console.log(`3: Finished get loaction`));
 
 //async await function
-(async function () {
-  try {
-    const city = await whereAmI();
-    console.log(`2: ${city}`);
-  } catch (err) {
-    console.error(`2: ${err.message}`);
-  }
-  console.log(`3: Finished get location`);
-})();
+// (async function () {
+//   try {
+//     const city = await whereAmI();
+//     console.log(`2: ${city}`);
+//   } catch (err) {
+//     console.error(`2: ${err.message}`);
+//   }
+//   console.log(`3: Finished get location`);
+// })();
 
 // console.log(`FIRST`);
 // try {
@@ -544,8 +544,85 @@ console.log(`1: Will get loaction`);
 
 const get3countries = async function (c1, c2, c3) {
   try {
-    const data1 = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // the below 3 lines wait for its previous AJAX call to complete
+    // which is no need here as they are not dependent on each other so
+    //we use the promise all function to run promise in paralle
+
+    // const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // the below is a helper function which return a promise
+    // if any one of the promise reject then all of them are rejected
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+    console.log(data.map(d => d[0].capital));
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 };
+// get3countries('usa', 'portugal', 'canada');
+
+// Promise.race
+// (async function () {
+//   const res = await Promise.race([
+//     getJSON(`https://restcountries.com/v2/name/portugal`),
+//     getJSON(`https://restcountries.com/v2/name/italy`),
+//     getJSON(`https://restcountries.com/v2/name/usa`),
+//   ]);
+//   console.log(res[0]);
+// })();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(() => {
+      reject(new Error(`Request took too long!`));
+    }, sec * 1000);
+  });
+};
+Promise.race([
+  getJSON(`https://restcountries.com/v2/name/portugal`),
+  timeout(5),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+//Promise.allSettled
+
+//Returns all the promises whether its fulfilled or rejected
+
+// Promise.allSettled([
+//   Promise.resolve(`Success`),
+//   Promise.reject(`ERROR`),
+//   Promise.resolve(`Another Success`),
+// ]).then(res => console.log(res));
+
+//Promise.all
+// If any one of the promsie rejected then it short circuit
+
+// Promise.all([
+//   Promise.resolve(`Success`),
+//   Promise.reject(`ERROR`),
+//   Promise.resolve(`Another Success`),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+//Promise.any
+// Return the first fulfilled promise
+// Rejected promises are ignored
+
+// Promise.any([
+//   Promise.resolve(`Success`),
+//   Promise.reject(`ERROR`),
+//   Promise.resolve(`Another Success`),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+//Coding Challenge #3
+console.log(`Coding Challenge #3`);
