@@ -1,4 +1,4 @@
-// // coding challenge 1
+// coding challenge 1
 // const calcAverage= (a,b,c)=> (a+b+c)/3;
 
 // let avgDolphins=calcAverage(44,23,71);
